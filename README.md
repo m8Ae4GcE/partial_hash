@@ -64,5 +64,5 @@ sys     0m45.039s
 Uh, good question... I think, with your eyes and a ruler because the output is in lexical order. (Good news)
 
 # Integrity (SHA256, the true)
-cce6bad358113c93cceb69f2909a9b3fb93c1e1e5dc878e0b18da3f792b4a1c2  partial_hash
-53994e5ac14194d70dcebf41f0a68c89b552e94cd41cb34b9d59a23593020411  partial_hash.go
+97880d097f162b6cefdb5972fa2b416133cc9162bf541f0d867e3f21f98393be  partial_hash
+12b052db0aa13d46b97252b015b01cad60edbb2177401be4387ae4e719abb783  partial_hash.go
