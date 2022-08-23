@@ -1,7 +1,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-by-crips.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
 
 # partial_hash
-Partial sha256 of file (depending if file > 100MB or not) because when you are very hurried and that is necessary, this tool will save you time. 
+Partial sha256 of file (depending if file > 100MB or not) because when you are very hurried and that is necessary, the script saves your time 
 
 # Run
 
@@ -24,6 +24,8 @@ hello.txt;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824;1/1
 /folder/subfolder/file1;426175749bf6a302057e80109bb9a90fd7c56bda22c73c5a34bbc85197c25c2d;1/2
 /folder/subfolder/hello.txt;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824;2/2
 ```
+
+For Windows, same options but open *partial_hash.exe* with a command interpreter (tested with powershell.exe and cmd.exe).
 
 # How it works
 
@@ -63,6 +65,8 @@ sys     0m45.039s
  
 Uh, good question... I think, with your eyes and a ruler because the output is in lexical order. (Good news)
 
-# Integrity (SHA256, the true)
-97880d097f162b6cefdb5972fa2b416133cc9162bf541f0d867e3f21f98393be  partial_hash
+# Integrity (SHA256, the real one because the files are smaller than 100MB)
+adcd38f1e80d83fc077fc9638f8e412996710bd8ff5bf100e41970b3bc696d26  partial_hash_amd64
+f07a7e3e26dc5317de0bdf61b26f4f663a2736e4556c7ae66005f6c380231bad  partial_hash_amd64.exe
+1d70ad3094cb2a3c592bcc1ea87772c41b09ae85a9a0426632b6a2fe038cc705  partial_hash_arm64
 12b052db0aa13d46b97252b015b01cad60edbb2177401be4387ae4e719abb783  partial_hash.go
