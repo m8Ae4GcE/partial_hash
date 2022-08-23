@@ -27,6 +27,8 @@ hello.txt;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824;1/1
 
 For Windows, same options but open *partial_hash.exe* with a command interpreter (tested with powershell.exe and cmd.exe).
 
+> **Warning** The format of file paths on Windows is "C:\\..." if C is the root of the drive to be hashed. 
+
 # How it works
 
 If the file is less than 100MB, so the hash is a real sha256.  
@@ -40,7 +42,7 @@ Why not...
 
 ## There are only 3 comments in your code?
 
-"Comments are like the H of Hawaii"
+"Comments are like the H of Hawaii" and there are 15 comments...
 
 ## Why not a real sha256 of the file? The integrity of this file is questionable with your tool and there is a possibility of hash collision in my lab...
 1. The time :
