@@ -67,8 +67,4 @@ sys     0m45.039s
  
 Uh, good question... I think, with your eyes and a ruler because the output is in lexical order. (Good news)
 
-# Integrity (SHA256, the real one because the files are smaller than 100MB)
-adcd38f1e80d83fc077fc9638f8e412996710bd8ff5bf100e41970b3bc696d26  partial_hash_amd64
-f07a7e3e26dc5317de0bdf61b26f4f663a2736e4556c7ae66005f6c380231bad  partial_hash_amd64.exe
-1d70ad3094cb2a3c592bcc1ea87772c41b09ae85a9a0426632b6a2fe038cc705  partial_hash_arm64
-12b052db0aa13d46b97252b015b01cad60edbb2177401be4387ae4e719abb783  partial_hash.go
+---
