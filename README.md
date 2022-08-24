@@ -7,7 +7,7 @@ Partial sha256 of file (depending on the chosen buffer) because when you are ver
 
 Use the right executable depending on your operating system and processor architecture. See the release for more information.
 
-> **Notes** Next, replace the name of the executable with your own.
+> **Note** Next, replace the name of the executable with your own.
 
 ```
 USAGE:
