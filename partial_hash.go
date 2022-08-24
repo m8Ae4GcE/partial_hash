@@ -1,4 +1,4 @@
-//v1
+//v1.1
 
 package main
 
@@ -15,13 +15,12 @@ import (
 // Define some variables to receive command-line values
 var uniq_file string
 var path_to_file string
+var BYTES_TO_READ uint64
 
 // Array to store the usage order
 var UsageOrder []string
 
 func main() {
-
-	BYTES_TO_READ := 100000000
 
 	// -h
 	flag.Usage = CustomUsage
@@ -34,9 +33,11 @@ func main() {
 		CustomUsage()
 		return
 	} else if uniq_file != "" {
+		fmt.Println("Size of the buffer (in bytes): ", BYTES_TO_READ)
 		calc_hash_file(BYTES_TO_READ, uniq_file, 1, 1)
 
 	} else if path_to_file != "" {
+		fmt.Println("Size of the buffer (in bytes): ", BYTES_TO_READ)
 		recusive(BYTES_TO_READ, path_to_file)
 	}
 
@@ -67,7 +68,7 @@ func CustomUsage() {
 			usageMap[f.Name] = fmt.Sprintf("\t  -%s  \t%s", f.Name, f.Usage)
 		}
 	})
-	fmt.Printf("Usage %s [-f <file>] or [-d <recursive_folder>] :\n", os.Args[0])
+	fmt.Printf("Usage %s [-f <file>] or [-d <recursive_folder>] [-b <buffer_size>]:\n", os.Args[0])
 	for s := range UsageOrder {
 		fmt.Println(usageMap[UsageOrder[s]])
 	}
@@ -75,7 +76,7 @@ func CustomUsage() {
 
 func setParameters() {
 	// Set usage order for display
-	UsageOrder = []string{"file", "f", "directory", "d"}
+	UsageOrder = []string{"file", "f", "directory", "d", "buffer", "b"}
 
 	flag.StringVar(&uniq_file, "file", uniq_file, "File to be hashed.")
 	flag.StringVar(&uniq_file, "f", uniq_file, "")
@@ -83,9 +84,12 @@ func setParameters() {
 	flag.StringVar(&path_to_file, "directory", path_to_file, "Folder where files will be recursively hashed.")
 	flag.StringVar(&path_to_file, "d", path_to_file, "")
 
+	flag.Uint64Var(&BYTES_TO_READ, "buffer", 100000000, "Size of the buffer in bytes.")
+	flag.Uint64Var(&BYTES_TO_READ, "b", 100000000, "")
+
 }
 
-func recusive(BYTES_TO_READ int, path_to_file string) {
+func recusive(BYTES_TO_READ uint64, path_to_file string) {
 	fsys := os.DirFS(path_to_file)
 
 	count_file := 0
@@ -117,7 +121,7 @@ func recusive(BYTES_TO_READ int, path_to_file string) {
 
 }
 
-func calc_hash_file(BYTES_TO_READ int, uniq_file string, in_prog_file int, count_file int) {
+func calc_hash_file(BYTES_TO_READ uint64, uniq_file string, in_prog_file int, count_file int) {
 	fi, err := os.Stat(uniq_file)
 
 	if err != nil {
