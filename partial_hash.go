@@ -1,4 +1,4 @@
-//v1.1
+//v1.2
 
 package main
 
@@ -10,12 +10,14 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"runtime"
+	"strings"
 )
 
 // Define some variables to receive command-line values
-var uniq_file string
+var filename string
 var path_to_file string
-var BYTES_TO_READ uint64
+var buffer_size uint64
 
 // Array to store the usage order
 var UsageOrder []string
@@ -23,30 +25,37 @@ var UsageOrder []string
 func main() {
 
 	// -h
-	flag.Usage = CustomUsage
+	flag.Usage = Parameters
 	// Setup flags and parse command line parameters
 	setParameters()
 	flag.Parse()
 
 	// Conditions
-	if (path_to_file) != "" && (uniq_file) != "" || len(os.Args) < 2 {
-		CustomUsage()
+	if (path_to_file) != "" && (filename) != "" || len(os.Args) < 2 {
+		Version()
+		Parameters()
 		return
-	} else if uniq_file != "" {
-		fmt.Println("Size of the buffer (in bytes): ", BYTES_TO_READ)
-		calc_hash_file(BYTES_TO_READ, uniq_file, 1, 1)
+	} else if filename != "" {
+		Version()
+		fmt.Println("Size of the buffer (in bytes): ", buffer_size)
+		calc_hash_file(buffer_size, filename, 1, 1)
 
 	} else if path_to_file != "" {
-		fmt.Println("Size of the buffer (in bytes): ", BYTES_TO_READ)
-		recusive(BYTES_TO_READ, path_to_file)
+		Version()
+		fmt.Println("Size of the buffer (in bytes): ", buffer_size)
+		recusive(buffer_size, path_to_file)
 	}
 
 }
 
-func CustomUsage() {
+func Version() {
+	fmt.Println("Version : 1.2")
+}
+
+func Parameters() {
 
 	if len(UsageOrder) == 0 {
-		fmt.Fprintf(os.Stderr, "Error: Attempting to use CustomUsage, but UsageOrder is not set\n")
+		fmt.Fprintf(os.Stderr, "Error: Attempting to use Parameters, but UsageOrder is not set\n")
 		flag.VisitAll(func(f *flag.Flag) {
 			// append f.Name to UsageOrder
 			UsageOrder = append(UsageOrder, f.Name)
@@ -59,7 +68,7 @@ func CustomUsage() {
 	flag.VisitAll(func(f *flag.Flag) {
 		if len(f.Name) > 1 && f.DefValue != "" {
 			// Longname usage with default value
-			usageMap[f.Name] = fmt.Sprintf("\n  --%s \t%s (Par défaut %s)", f.Name, f.Usage, f.DefValue)
+			usageMap[f.Name] = fmt.Sprintf("\n  --%s \t%s (Default is %s)", f.Name, f.Usage, f.DefValue)
 		} else if len(f.Name) > 1 {
 			// Longname usage without default value
 			usageMap[f.Name] = fmt.Sprintf("\n  --%s \t%s", f.Name, f.Usage)
@@ -78,14 +87,14 @@ func setParameters() {
 	// Set usage order for display
 	UsageOrder = []string{"file", "f", "directory", "d", "buffer", "b"}
 
-	flag.StringVar(&uniq_file, "file", uniq_file, "File to be hashed.")
-	flag.StringVar(&uniq_file, "f", uniq_file, "")
+	flag.StringVar(&filename, "file", filename, "File to be hashed.")
+	flag.StringVar(&filename, "f", filename, "")
 
 	flag.StringVar(&path_to_file, "directory", path_to_file, "Folder where files will be recursively hashed.")
 	flag.StringVar(&path_to_file, "d", path_to_file, "")
 
-	flag.Uint64Var(&BYTES_TO_READ, "buffer", 100000000, "Size of the buffer in bytes.")
-	flag.Uint64Var(&BYTES_TO_READ, "b", 100000000, "")
+	flag.Uint64Var(&buffer_size, "buffer", 100000000, "Size of the buffer in bytes.")
+	flag.Uint64Var(&buffer_size, "b", 100000000, "")
 
 }
 
@@ -93,7 +102,7 @@ func recusive(BYTES_TO_READ uint64, path_to_file string) {
 	fsys := os.DirFS(path_to_file)
 
 	count_file := 0
-	in_prog_file := 0
+	in_queue_file := 0
 
 	fs.WalkDir(fsys, ".", func(path string, info fs.DirEntry, err error) error {
 		if err != nil {
@@ -112,16 +121,19 @@ func recusive(BYTES_TO_READ uint64, path_to_file string) {
 			return err
 		}
 		if info.IsDir() == false {
+			if runtime.GOOS == "windows" {
+				path = strings.ReplaceAll(path, "/", "\\")
+			}
 			uniq_file := path_to_file + path
-			in_prog_file++
-			calc_hash_file(BYTES_TO_READ, uniq_file, in_prog_file, count_file)
+			in_queue_file++
+			calc_hash_file(BYTES_TO_READ, uniq_file, in_queue_file, count_file)
 		}
 		return nil
 	})
 
 }
 
-func calc_hash_file(BYTES_TO_READ uint64, uniq_file string, in_prog_file int, count_file int) {
+func calc_hash_file(BYTES_TO_READ uint64, uniq_file string, in_queue_file int, count_file int) {
 	fi, err := os.Stat(uniq_file)
 
 	if err != nil {
@@ -163,7 +175,7 @@ func calc_hash_file(BYTES_TO_READ uint64, uniq_file string, in_prog_file int, co
 		}
 
 		hash := sha256.Sum(nil)
-		fmt.Printf("%s;%x;%d/%d\n", uniq_file, hash, in_prog_file, count_file)
+		fmt.Printf("%s;%x;%d/%d\n", uniq_file, hash, in_queue_file, count_file)
 
 	} else {
 		// open file
@@ -189,7 +201,7 @@ func calc_hash_file(BYTES_TO_READ uint64, uniq_file string, in_prog_file int, co
 
 		//calc hash
 		hash := sha256.Sum256(s)
-		fmt.Printf("%s;%x;%d/%d\n", uniq_file, hash, in_prog_file, count_file)
+		fmt.Printf("%s;%x;%d/%d\n", uniq_file, hash, in_queue_file, count_file)
 
 	}
 

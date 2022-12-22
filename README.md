@@ -1,11 +1,4 @@
-[![percent](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com)
-[![crips](https://forthebadge.com/images/badges/built-by-crips.svg)](https://forthebadge.com)
-[![love](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
-[![go](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
-[![black-magic](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)
-[![badges](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
-[![ask](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)  
-[![release](https://img.shields.io/badge/Release-v1.1-green?style=for-the-badge)](https://forthebadge.com)
+[![percent](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com) [![love](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![go](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) [![black-magic](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com) [![ask](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)  [![release](https://img.shields.io/badge/Release-v1.2-green?style=for-the-badge)](https://forthebadge.com)
 
 # partial_hash
 Partial sha256 of file (depending on the chosen buffer) because when you are in a hurry and that is necessary, this tool saves you time.
@@ -18,9 +11,9 @@ Use the right executable depending on your operating system and processor archit
 
 ```
 USAGE:
-    partial_hash [-f <file>] or [-d <recursive_folder>] [-b <buffer_size>]
+    partial_hash [[-f <file>] or [-d <recursive_folder>]] [-b <buffer_size>]
 
-OPTIONS (only one of them):
+OPTIONS (only -f or -d):
     -f, --file <file>                  File to be hashed.
     -d, --directory <recursive_path>   Folder where files will be recursively hashed.
     -b, --buffer <buffer_size>         Size of the buffer in bytes.
@@ -39,7 +32,7 @@ Size of the buffer (in bytes):  100000000
 /folder/subfolder/hello.txt;887a8f98c79fd7c3b036448d56fa2b6d8b91f4461125621587beeef63b1e4f29;2/2
 ```
 
-For Windows, same options but open *partial_hash.exe* with a command interpreter (tested with powershell.exe and cmd.exe).
+For Windows, same options but open *partial_hash.exe* with a command interpreter (tested with Powershell and cmd.exe).
 
 > **Warning** The format of file paths on Windows is "C:\\..." if C is the root of the drive to be hashed. 
 
@@ -54,10 +47,6 @@ If the file is larger than the buffer size, then the tool will take the first X 
 ## Why?
 
 Why not...
-
-## There are only 3 comments in your code?
-
-"Comments are like the H of Hawaii" (French joke) and there are 15 comments...
 
 ## Why not a real sha256 of the file? The integrity of this file is questionable with your tool and there is a possibility of hash collision in my lab...
 1. The time :
