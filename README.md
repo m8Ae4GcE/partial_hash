@@ -76,7 +76,7 @@ user    0m3.346s
 sys     0m4.870
 
 $ time md5sum 11G_urandom_file 
-f66ee1ceee1ad4552730006b150d7c23  /mnt/sdb/10G_random_file
+f66ee1ceee1ad4552730006b150d7c23  10G_random_file
 
 real    2m50.767s
 user    0m57.396s
