@@ -65,19 +65,22 @@ Why not...
 ## Why not a real md5 of the file? The integrity of this file is questionable with your tool and there is a possibility of hash collision in my lab...
 1. The time :
 ```
-$ time ./partial_hash -f 11G_urandom_file 
-11G_urandom_file;f1a5ec97f391a2d72e269f8cb1c91a516bc5246855b0dcf9073578df463891b6;1/1
+$ time ./partial_hash -f 10G_random_file 
+Version :  2.0
+Size of the buffer (in bytes) :  100000000
 
-real    0m7.674s
-user    0m6.285s
-sys     0m3.945s
+10G_random_file    b6e01f7403eb000fda183a4cb1ac94bf
+
+real    0m4.907s
+user    0m3.346s
+sys     0m4.870
 
 $ time md5sum 11G_urandom_file 
-53f52c5d14cd467246a4d5bcaabd48ee032af8e679470654e2a0d014ab548e5e  11G_urandom_file
+f66ee1ceee1ad4552730006b150d7c23  /mnt/sdb/10G_random_file
 
-real    6m7.376s
-user    4m20.007s
-sys     0m45.039s
+real    2m50.767s
+user    0m57.396s
+sys     0m51.465s
 ```
 2. A hash of 200MB is not really questionable if you don't lose your eye index.
 
