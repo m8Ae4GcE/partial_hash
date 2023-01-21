@@ -126,7 +126,7 @@ func create_output_file(export_filename string) {
 	}
 	// close the file with defer
 	defer f.Close()
-	f.WriteString("filename;hash;is_partial_hash")
+	f.WriteString("filename;hash;is_partial_hash\n")
 
 }
 
